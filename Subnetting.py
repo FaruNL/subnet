@@ -21,7 +21,7 @@ class Subnetting:
         else:
             return ""
 
-    def __ips_max(self, ips: int) -> int:
+    def ips_max(self, ips: int) -> int:
         '''
         Encuentra el numero de IPs necesarios que satisfaga ips
 
@@ -41,7 +41,7 @@ class Subnetting:
 
         ips: Valor dado
         '''
-        ips_max = self.__ips_max(ips)
+        ips_max = self.ips_max(ips)
         return int(math.log2(ips_max))
 
     def mascara_nueva(self, potencia: int) -> str:

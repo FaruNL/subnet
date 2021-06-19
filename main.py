@@ -24,18 +24,21 @@ def lectura_datos(rep, gs):
 
     ips_dict[limite_inf] = limite_sup
 
-def ordenar_ips():
-    global ips_dict
-
+def ordenar_ips(ips_dict):
     dict_items = ips_dict.items()
     ips_ordenadas = sorted(dict_items)
 
-    ips_dict = __list_into_dict(ips_ordenadas)
+    return dict(ips_ordenadas)
 
-def __list_into_dict(list) -> dict:
-    it = iter(list)
-    r_dict = dict(zip(it, it))
-    return r_dict
+def __ips_helper(ips_dict: dict) -> dict:
+    ips_dict_helper = dict()
+    for key, value in ips_dict.items():
+        key = int_to_ip(key)
+        value = int_to_ip(value)
+        ips_dict_helper[key] = value
+
+    return ips_dict_helper
+
 
 def primera_vez(gs, ip, salto, posicion, mascara):
     red_disp = input("Que red disponible?: ")
@@ -56,7 +59,7 @@ def primera_vez(gs, ip, salto, posicion, mascara):
     gs.set_cellvalue("F2", mascara)
 
     lectura_datos(0, gs)
-    print(ips_dict)
+    print(__ips_helper(ips_dict))
 
 def continuacion(rep, gs, ip, salto, posicion, mascara, ips_max):
     global ips_dict
@@ -65,21 +68,13 @@ def continuacion(rep, gs, ip, salto, posicion, mascara, ips_max):
     nueva_ip = ip
 
     print(f"\nSalto: {salto}\nPos: {posicion}\nIPs_max: {ips_max}\n")
-
-    lectura_datos(rep, gs)
-    ordenar_ips()
-    print(ips_dict)
     
-    for i in range(rep):
+    for i in ips_dict.items():
         print("+++++++")
-        limite_inf = ip_to_int(gs.get_cellvalue(2 + i, 2))
-        limite_sup = ip_to_int(gs.get_cellvalue(2 + i, 5))
-        
         check = ip_to_int(nueva_ip)
         
-        
-        while(limite_inf <= check <= limite_sup):
-            print(f"{int_to_ip(limite_inf)} <= {int_to_ip(check)} <= {int_to_ip(limite_sup)}")
+        while(i[0] <= check <= i[1]):
+            print(f"{int_to_ip(i[0])} <= {int_to_ip(check)} <= {int_to_ip(i[1])}")
             nueva_ip = suma_salto(nueva_ip, salto, posicion)
             check = ip_to_int(nueva_ip)
             print(f"Check: {int_to_ip(check)}")
@@ -91,6 +86,16 @@ def continuacion(rep, gs, ip, salto, posicion, mascara, ips_max):
             print("otra mas")
             nueva_ip = suma_salto(nueva_ip, salto, posicion)
     
+    for i in ips_dict.items():
+        print("+++++++")
+        check = ip_to_int(nueva_ip)
+        
+        while(i[0] <= check <= i[1]):
+            print(f"{int_to_ip(i[0])} <= {int_to_ip(check)} <= {int_to_ip(i[1])}")
+            nueva_ip = suma_salto(nueva_ip, salto, posicion)
+            check = ip_to_int(nueva_ip)
+            print(f"Check: {int_to_ip(check)}")
+    
     primera_red = suma(nueva_ip, 1)
     broadcast = resta(suma_salto(nueva_ip, salto, posicion), 1)
     ultima_red = resta (broadcast, 1)
@@ -100,6 +105,10 @@ def continuacion(rep, gs, ip, salto, posicion, mascara, ips_max):
     gs.set_cellvalue("D" + str(2 + rep), ultima_red)
     gs.set_cellvalue("E" + str(2 + rep), broadcast)
     gs.set_cellvalue("F" + str(2 + rep), mascara)
+
+    lectura_datos(rep, gs)
+    ips_dict = ordenar_ips(ips_dict)
+    print(__ips_helper(ips_dict))
 
 def run():
     ip_rangos = {}

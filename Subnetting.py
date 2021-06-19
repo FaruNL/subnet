@@ -70,13 +70,14 @@ class Subnetting:
 
         return (".".join(numeros_dec))
 
-    def salto(self, mascara_bin: str) -> int:
+    def salto_pos(self, mascara_bin: str) -> int:
         numeros_bin = mascara_bin.split(".")
 
         for i in range(len(numeros_bin) - 1, 0, -1):
             if numeros_bin[i] != "00000000":
                 matches = re.findall("0", numeros_bin[i])
-                return int(math.pow(2, len(matches)))
 
-    def ip_inicial(self) -> str:
-        
+                salto = int(math.pow(2, len(matches)))
+                posicion = i
+
+                return [salto, posicion]

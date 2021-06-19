@@ -2,7 +2,8 @@
 
 from colors import Style
 from Subnetting import Subnetting
-from operations import suma
+import operations
+from gsheets import GSheets
 
 from signal import signal, SIGINT
 from sys import exit
@@ -25,6 +26,7 @@ def run():
         if match is None:
             print(f"{Style.BOLD}{Style.RED}Introduce una IP válida!{Style.RESET}\n")
         else:
+            del match
             break
 
 
@@ -39,6 +41,8 @@ def run():
         else:
             break
 
+    gs = GSheets("Examen", 0)
+
     for i in range(redes):
         print(f"\n{Style.BOLD}{Style.GREEN}------------------------------{Style.RESET}")
         print(f"{Style.BOLD}{Style.GREEN}Red {i + 1}{Style.RESET}")
@@ -50,12 +54,22 @@ def run():
         potencia = subnetting.potencia((int(ips)))
         mascara_bin = subnetting.mascara_nueva(potencia)
         mascara_dec = subnetting.mascara_decimal(mascara_bin)
-        salto = subnetting.salto(mascara_bin)
+        salto = subnetting.salto_pos(mascara_bin)[0]
+        posicion = subnetting.salto_pos(mascara_bin)[1]
 
         print(potencia)
         print(mascara_bin)
         print(mascara_dec)
         print(salto)
+        print(posicion)
+
+        for i in range(redes):
+            limite_inf = gs.get_cellvalue(2 + i, 2)
+            limite_sup = gs.get_cellvalue(2 + i, 5)
+            print(limite_inf)
+            print(limite_sup)
+            if limite_inf == None or limite_sup == None: break
+
 
         # red_num = input("Red utilizable (int): ")
 

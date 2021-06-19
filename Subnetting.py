@@ -3,7 +3,7 @@ import re
 
 
 class Subnetting:
-    def __init__(self, string: str,) -> None:
+    def __init__(self, string: str) -> None:
         self.mascara = self.__mascara_base(string)
         self.ip_inicial = ""
         self.ip_final = ""
@@ -77,3 +77,6 @@ class Subnetting:
             if numeros_bin[i] != "00000000":
                 matches = re.findall("0", numeros_bin[i])
                 return int(math.pow(2, len(matches)))
+
+    def ip_inicial(self) -> str:
+        

@@ -1,8 +1,8 @@
 import gspread
 
 class GSheets():
-    def __init__(self, spreadsheet = None, worksheet = None) -> None:
-        self.g_client = gspread.service_account(filename='/home/farid/python-projects/subnetting/Python-Sheets-API-Key.json')
+    def __init__(self, json_file = None, spreadsheet = None, worksheet = None,) -> None:
+        self.g_client = gspread.service_account(filename=json_file)
         self.spreadsheet = self.g_client.open(spreadsheet)
         if type(worksheet) is int:
             self.worksheet = self.spreadsheet.get_worksheet(worksheet)

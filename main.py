@@ -136,7 +136,7 @@ def run():
         else:
             break
 
-    gs = GSheets("Examen", 0)
+    gs = GSheets("/home/farid/python-projects/subnetting/Python-Sheets-API-Key.json", "Examen", 0)
 
     for red in range(redes):
         print(f"\n{Style.BOLD}{Style.GREEN}------------------------------{Style.RESET}")

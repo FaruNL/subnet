@@ -25,15 +25,3 @@ def suma_salto(ip_address: str, num: int, pos: int) -> str:
 def resta(ip_address: str, num: int) -> str:  
     int_value = ip_to_int(ip_address)
     return int_to_ip(int_value - num)
-
-# def resta(ip_address: str, num: int, pos: int) -> str:
-#     if pos == 0:
-#         num *= (256 * 256 * 256)
-#     elif pos == 1:
-#         num *= (256 * 256)
-#     elif pos == 2:
-#         num *= 256
-
-#     int_value = __ip_to_int(ip_address)
-#     return __int_to_ip(int_value - num)
-

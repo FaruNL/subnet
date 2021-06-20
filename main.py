@@ -7,7 +7,7 @@ from gsheets import GSheets
 
 from signal import signal, SIGINT
 from sys import exit
-import re
+from re import fullmatch
 
 ips_dict = dict()
 
@@ -72,14 +72,15 @@ def continuacion(rep, gs, ip, salto, posicion, mascara, ips_max):
     for i in ips_dict.items():
         print("+++++++")
         check = ip_to_int(nueva_ip)
+        check_last = ip_to_int(resta(suma_salto(nueva_ip, salto, posicion), 1))
         
-        while(i[0] <= check <= i[1]):
+        while(i[0] <= check <= i[1] or i[0] <= check_last <= i[1]):
             print(f"{int_to_ip(i[0])} <= {int_to_ip(check)} <= {int_to_ip(i[1])}")
             nueva_ip = suma_salto(nueva_ip, salto, posicion)
             check = ip_to_int(nueva_ip)
+            check_last = ip_to_int(resta(suma_salto(nueva_ip, salto, posicion), 1))
             print(f"Check: {int_to_ip(check)}")
-        
-        # if limite_inf == None or limite_sup == None: break
+            print(f"Check_Last: {int_to_ip(check_last)}")
 
     if int(red_disp) > 1:
         for i in range(int(red_disp) - 1):
@@ -90,7 +91,7 @@ def continuacion(rep, gs, ip, salto, posicion, mascara, ips_max):
         print("+++++++")
         check = ip_to_int(nueva_ip)
         
-        while(i[0] <= check <= i[1]):
+        while(i[0] <= check <= i[1] or i[0] <= check_last <= i[1]):
             print(f"{int_to_ip(i[0])} <= {int_to_ip(check)} <= {int_to_ip(i[1])}")
             nueva_ip = suma_salto(nueva_ip, salto, posicion)
             check = ip_to_int(nueva_ip)
@@ -115,7 +116,7 @@ def run():
     
     while True:
         ip = input("Introduce la IP inicial: ")
-        match = re.fullmatch("\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", ip)
+        match = fullmatch("\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", ip)
 
         if match is None:
             print(f"{Style.BOLD}{Style.RED}Introduce una IP válida!{Style.RESET}\n")

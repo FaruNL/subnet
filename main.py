@@ -158,10 +158,5 @@ def run():
         else:
             continuacion(red, gs, ip, salto, posicion, mascara_dec, ips_max)
 
-        
-
-        print(f"\n{Style.BLUE}Impresion{Style.RESET}")
-        print(f"{Style.BOLD}{Style.GREEN}------------------------------{Style.RESET}\n")
-
 if __name__ == "__main__":
     main()

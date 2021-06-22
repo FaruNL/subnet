@@ -4,10 +4,17 @@ class GSheets():
     def __init__(self, json_file = None, spreadsheet = None, worksheet = None,) -> None:
         self.g_client = gspread.service_account(filename=json_file)
         self.spreadsheet = self.g_client.open(spreadsheet)
-        if type(worksheet) is int:
-            self.worksheet = self.spreadsheet.get_worksheet(worksheet)
+        if self.__is_int(worksheet):
+            self.worksheet = self.spreadsheet.get_worksheet(int(worksheet))
         else:
             self.worksheet = self.spreadsheet.worksheet(worksheet)
+
+    def __is_int(self, string: str) -> bool:
+        try:
+            int(string)
+            return True
+        except:
+            return False
 
     def set_spreadsheet(self, title: str):
         self.spreadsheet = self.g_client.open(title)

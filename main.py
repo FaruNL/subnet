@@ -146,10 +146,22 @@ def continuacion(rep, gs, ip, salto, posicion, mascara, ips_max):
 
 def run():
 
-    if len(argv) == 1:
-        print("Sólo pon en comillas la ruta del archivo JSON: \"/ruta/a/archivo.json\"")
+    if len(argv) < 4:
+        print("main [ruta de JSON] [Nombre de GSheet] [Numero de Hoja | Nombre de Hoja]")
+        print("\tmain \"/home/usuario/API.json\" \"Examen\" 0")
+        print("\tmain \"/home/usuario/API.json\" \"Examen\" \"Hoja 1\"")
         exit(1)
     
+    file = argv[1]
+    spreadsheet = argv[2]
+    worksheet = argv[3]
+    
+    if path.isfile(file):
+        gs = GSheets(file, spreadsheet, worksheet)
+    else:
+        print("El archivo JSON no se encontró en la ruta especificada")
+        exit(1)
+
     while True:
         ip = input("Introduce la IP inicial: ")
         match = fullmatch("\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", ip)
@@ -171,13 +183,6 @@ def run():
             print(f"{Style.BOLD}{Style.RED}Seguro?{Style.RESET}\n")
         else:
             break
-
-    file = argv[1]
-    if path.isfile(file):
-        gs = GSheets(file, "Examen", 0)
-    else:
-        print("El archivo JSON no se encontró en la ruta especificada")
-        exit(1)
 
     for red in range(redes):
         print(f"\n{Style.BOLD}{Style.GREEN}------------------------------{Style.RESET}")

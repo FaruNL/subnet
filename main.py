@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from colors import Style
-from subnetting import Subnetting
+from subnetting import ips_max, potencia, mascara_nueva, mascara_decimal, salto_pos
 from operations import int_to_ip, ip_to_int, suma, suma_salto, resta
 from gsheets import GSheets
 
@@ -188,21 +188,21 @@ def run():
         print(f"\n{Style.BOLD}{Style.GREEN}------------------------------{Style.RESET}")
         print(f"{Style.BOLD}{Style.GREEN}Red {red + 1}{Style.RESET}")
         
-        subnet = Subnetting(ip)
+        # subnet = Subnetting(ip)
 
         ips = input("Cuantas IPs son necesarias?: ")
         
-        ips_max = subnet.ips_max(int(ips))
-        potencia = subnet.potencia(int(ips))
-        mascara_bin = subnet.mascara_nueva(potencia)
-        mascara_dec = subnet.mascara_decimal(mascara_bin)
-        salto = subnet.salto_pos(mascara_bin)[0]
-        posicion = subnet.salto_pos(mascara_bin)[1]
+        ips_mx = ips_max(int(ips))
+        pot = potencia(int(ips))
+        mascara_bin = mascara_nueva(pot)
+        mascara_dec = mascara_decimal(mascara_bin)
+        salto = salto_pos(mascara_bin)[0]
+        posicion = salto_pos(mascara_bin)[1]
 
         if red == 0:
             primera_vez(gs, ip, salto, posicion, mascara_dec)
         else:
-            continuacion(red, gs, ip, salto, posicion, mascara_dec, ips_max)
+            continuacion(red, gs, ip, salto, posicion, mascara_dec, ips_mx)
 
 if __name__ == "__main__":
     main()

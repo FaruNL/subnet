@@ -5,6 +5,8 @@ from Subnetting import Subnetting
 from operations import int_to_ip, ip_to_int, suma, suma_salto, resta
 from gsheets import GSheets
 
+from sys import argv
+from os import path
 from signal import signal, SIGINT
 from sys import exit
 from re import fullmatch
@@ -143,6 +145,10 @@ def continuacion(rep, gs, ip, salto, posicion, mascara, ips_max):
     ips_dict = ordenar_ips(ips_dict)
 
 def run():
+
+    if len(argv) == 1:
+        print("Sólo pon en comillas la ruta del archivo JSON: \"/ruta/a/archivo.json\"")
+        exit(1)
     
     while True:
         ip = input("Introduce la IP inicial: ")
@@ -166,7 +172,12 @@ def run():
         else:
             break
 
-    gs = GSheets("/home/farid/python-projects/subnetting/Python-Sheets-API-Key.json", "Examen", 0)
+    file = argv[1]
+    if path.isfile(file):
+        gs = GSheets(file, "Examen", 0)
+    else:
+        print("El archivo JSON no se encontró en la ruta especificada")
+        exit(1)
 
     for red in range(redes):
         print(f"\n{Style.BOLD}{Style.GREEN}------------------------------{Style.RESET}")

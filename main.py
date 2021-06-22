@@ -60,7 +60,6 @@ def continuacion(rep, gs, ip, salto, posicion, mascara, ips_max):
 
     red_disp_ok = 0
     error = False
-    encontrado = False
 
     check = ip_to_int(nueva_ip)
     check_last = ip_to_int(resta(suma_salto(nueva_ip, salto, posicion), 1))
@@ -130,35 +129,6 @@ def continuacion(rep, gs, ip, salto, posicion, mascara, ips_max):
             check = ip_to_int(nueva_ip)
             check_last = ip_to_int(resta(suma_salto(nueva_ip, salto, posicion), 1))
 
-
-    # if int(red_disp) > 1:
-    #     for i in range(int(red_disp) - 1):
-    #         print("otra mas")
-    #         nueva_ip = suma_salto(nueva_ip, salto, posicion)
-    
-    # for i in ips_dict.items():
-    #     print("+++++++")
-    #     check = ip_to_int(nueva_ip)
-        
-    #     while(i[0] <= check <= i[1] or i[0] <= check_last <= i[1]):
-    #         print(f"{int_to_ip(i[0])} <= {int_to_ip(check)} <= {int_to_ip(i[1])}")
-    #         nueva_ip = suma_salto(nueva_ip, salto, posicion)
-    #         check = ip_to_int(nueva_ip)
-    #         print(f"Check: {int_to_ip(check)}")
-    
-    # for i in ips_dict.items():
-    #     print("+++++++")
-    #     check = ip_to_int(nueva_ip)
-    #     check_last = ip_to_int(resta(suma_salto(nueva_ip, salto, posicion), 1))
-        
-    #     while(i[0] >= check and i[1] <= check_last):
-    #         print(f"{int_to_ip(i[0])} <= {int_to_ip(check)} <= {int_to_ip(i[1])}")
-    #         nueva_ip = suma_salto(nueva_ip, salto, posicion)
-    #         check = ip_to_int(nueva_ip)
-    #         check_last = ip_to_int(resta(suma_salto(nueva_ip, salto, posicion), 1))
-    #         print(f"Check: {int_to_ip(check)}")
-    #         print(f"Check_Last: {int_to_ip(check_last)}")
-    
     primera_red = suma(nueva_ip, 1)
     broadcast = resta(suma_salto(nueva_ip, salto, posicion), 1)
     ultima_red = resta (broadcast, 1)
